@@ -43,12 +43,16 @@ public void setup() {
 public void draw() {
   //When spacebar is pressed or automode is on, do calculation
   while (spacebar == true) {
+    prime = true;           //start with the assumption that the number is prime
     println("\n", "\n", "\n", "\n", "\n", "\n", "\n", "\n", "\n");  //Simply adds some linebreaks so it looks good in the console.
 
     //Loop that checks the current number against all saved primes with modulo.
-    //If the number can be divided, the result of the modulo is 0, otherwise there's something left.
-    //As soon as a %0 is detected, the calculation ends and prime is set to false.
+    //Stop checking once the checked prime is larger than sqrt(number).
+    float limit = sqrt(number);
     for (int i = 0; i < primeNumbers.length; i++) {
+      if (primeNumbers[i] > limit) {
+        break;
+      }
       if (number % primeNumbers[i] == 0) {
         prime = false;
         println("The number", number, "is not a prime :(");
@@ -71,10 +75,8 @@ public void draw() {
         }
       }
     } else {
-      //When the number is not a prime, display the number in white and reset the prime to true.
+      //When the number is not a prime, display the number in white.
       fill(255);
-      prime = true;  //This is done because we are only proving a number IS NOT a prime.
-      //Setting this value to true, makes all the calculations and logic a bit more easy.
     }
 
     background(0);          //Black image, this overwrites the number that is visible before a new one is displayed.
